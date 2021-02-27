@@ -1,20 +1,27 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title class="text-center font-serif text-3xl ">
+      CashExtremeño
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="flex justify-center p-5 m-5 h-1/5">
+    <img src="../../assets/icon/logo-cash-extremenio-300x99.png" alt="">
   </div>
+  <div class="flex flex-col justify-center  items-center m-4 p-3 h-3/5">
+
+    <ion-button class="min-w-full  m-1.5" color="success" (click)="navPlantillaPedido()">plantilla de pedido
+    </ion-button>
+
+
+    <ion-button class="min-w-full m-1.5" color="light">Hacer Pedido</ion-button>
+
+
+    <ion-button class="min-w-full m-1.5" color="dark">Ver pedido actual</ion-button>
+
+  </div>
+
 </ion-content>

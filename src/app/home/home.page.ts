@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  constructor(private router: Router, private rutaActiva: ActivatedRoute) {}
 
-  constructor() {}
-
+  navPlantillaPedido() {
+    this.router.navigate(['plantilla-pedido']);
+  }
 }

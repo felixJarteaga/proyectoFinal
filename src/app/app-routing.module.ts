@@ -11,6 +11,14 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'plantilla-pedido',
+    loadChildren: () => import('./plantilla-pedido/plantilla-pedido.module').then( m => m.PlantillaPedidoPageModule)
+  },
+  {
+    path: 'plantilla-producto-familia',
+    loadChildren: () => import('./plantilla-producto-familia/plantilla-producto-familia.module').then( m => m.PlantillaProductoFamiliaPageModule)
+  },
 ];
 
 @NgModule({
