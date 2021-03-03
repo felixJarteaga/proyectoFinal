@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-plantilla-producto-familia',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./plantilla-producto-familia.page.scss'],
 })
 export class PlantillaProductoFamiliaPage implements OnInit {
+  constructor(private router: Router, private rutaActivada: ActivatedRoute) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  navProductoDetalle() {
+    this.router.navigate(['producto-detalle']);
   }
-
 }
