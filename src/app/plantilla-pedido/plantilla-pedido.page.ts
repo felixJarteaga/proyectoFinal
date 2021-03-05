@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { DatosBBDDService } from '../datos-bbdd.service';
+import { CopyService } from '../share/copy.service';
 
 @Component({
   selector: 'app-plantilla-pedido',
@@ -7,11 +9,30 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./plantilla-pedido.page.scss'],
 })
 export class PlantillaPedidoPage implements OnInit {
-  constructor(private router: Router, private rutaActiva: ActivatedRoute) {}
+  familasList: any[] = [];
+  constructor(
+    private copiaService: CopyService,
+    private datosBBDD: DatosBBDDService,
+    private router: Router,
+    private rutaActiva: ActivatedRoute
+  ) {
+    this.getFamilias();
+  }
 
   ngOnInit() {}
 
-  navPlantillaProfuctoFamilia() {
-    this.router.navigate(['plantilla-producto-familia']);
+  async getFamilias() {
+    this.familasList = [];
+    await this.datosBBDD.getFamilias();
+    this.familasList = this.datosBBDD.getFamiliaList();
+  }
+
+  navPlantillaProfuctoFamilia(nombre: string) {
+    let extrasNavigation: NavigationExtras = {
+      state: {
+        nombreFamilia: nombre,
+      },
+    };
+    this.router.navigate(['plantilla-producto-familia'], extrasNavigation);
   }
 }

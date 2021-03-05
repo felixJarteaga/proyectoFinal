@@ -9,15 +9,9 @@
 
 <ion-content>
   <ion-card>
-    <ion-card-content>
-      <ion-button expand="block" (click)="navPlantillaProfuctoFamilia()" color="success">Bebida Fina</ion-button>
-      <ion-button expand="block" (click)="navPlantillaProfuctoFamilia()" color="success">CREMAS Y LICORES</ion-button>
-      <ion-button expand="block" (click)="navPlantillaProfuctoFamilia()" color="success">VINOS</ion-button>
-      <ion-button expand="block" (click)="navPlantillaProfuctoFamilia()" color="success">CERVEZAS</ion-button>
-      <ion-button expand="block" (click)="navPlantillaProfuctoFamilia()" color="light">REFRESCOS</ion-button>
-      <ion-button expand="block" (click)="navPlantillaProfuctoFamilia()" color="light">DESAYUNOS</ion-button>
-      <ion-button expand="block" (click)="navPlantillaProfuctoFamilia()" color="light">COCINA</ion-button>
-      <ion-button expand="block" (click)="navPlantillaProfuctoFamilia()" color="light">MENAJE Y LIMPIEZA</ion-button>
+    <ion-card-title>Familia de productos</ion-card-title>
+    <ion-card-content *ngFor="let familia of familasList">
+      <ion-item button (click)="navPlantillaProfuctoFamilia(familia.nombre)">{{familia.nombre}}</ion-item>
     </ion-card-content>
     <ion-card-content>
       <ion-button expand="block" color="dark">GUARDAR PLANTILLA</ion-button>
