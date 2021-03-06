@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { DatosBBDDService } from '../datos-bbdd.service';
-import { CopyService } from '../share/copy.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import {DatosBBDDService} from '../datos-bbdd.service';
+import {CopyService} from '../share/copy.service';
 
 @Component({
   selector: 'app-plantilla-pedido',
@@ -10,6 +10,7 @@ import { CopyService } from '../share/copy.service';
 })
 export class PlantillaPedidoPage implements OnInit {
   familasList: any[] = [];
+
   constructor(
     private copiaService: CopyService,
     private datosBBDD: DatosBBDDService,
@@ -19,16 +20,23 @@ export class PlantillaPedidoPage implements OnInit {
     this.getFamilias();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  async getFamilias() {
+  getFamilias() {
     this.familasList = [];
-    await this.datosBBDD.getFamilias();
-    this.familasList = this.datosBBDD.getFamiliaList();
+    this.datosBBDD.getFamilias()
+      .then((data) => {
+        this.familasList = data;
+      })
+      .catch((err) => {
+        console.log('Error en plantilla-pedidos-page-ts: ' + err);
+      });
+
   }
 
   navPlantillaProfuctoFamilia(nombre: string) {
-    let extrasNavigation: NavigationExtras = {
+    const extrasNavigation: NavigationExtras = {
       state: {
         nombreFamilia: nombre,
       },

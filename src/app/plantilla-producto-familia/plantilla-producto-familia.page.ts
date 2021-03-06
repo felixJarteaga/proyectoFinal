@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { DatosBBDDService } from '../datos-bbdd.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import {DatosBBDDService} from '../datos-bbdd.service';
 
 @Component({
   selector: 'app-plantilla-producto-familia',
@@ -10,6 +10,7 @@ import { DatosBBDDService } from '../datos-bbdd.service';
 export class PlantillaProductoFamiliaPage implements OnInit {
   productosListFiltradoPorFamiliasPlantilla: any[] = [];
   familiaNombre: string;
+
   constructor(
     private router: Router,
     private rutaActivada: ActivatedRoute,
@@ -21,16 +22,22 @@ export class PlantillaProductoFamiliaPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  async getproductosListFiltradoPorFamiliasPlantilla() {
+  getproductosListFiltradoPorFamiliasPlantilla() {
     this.productosListFiltradoPorFamiliasPlantilla = [];
-    await this.datosBBDD.getProductoFamiliaPlantilla(this.familiaNombre);
-    this.productosListFiltradoPorFamiliasPlantilla = this.datosBBDD.getproductosListFiltradoPorFamiliasPlantilla();
+    this.datosBBDD.getProductoFamiliaPlantilla(this.familiaNombre)
+      .then((data) => {
+        this.productosListFiltradoPorFamiliasPlantilla = data;
+      })
+      .catch((err) => {
+      });
+
   }
 
   navProductoDetalle(idProducto: number) {
-    let extrasNavigation: NavigationExtras = {
+    const extrasNavigation: NavigationExtras = {
       state: {
         ProductoId: idProducto,
       },
