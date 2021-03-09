@@ -1,9 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>productoInfo</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Informacion del Producto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-card *ngFor="let productoConcreto of productoConcretoList">
+    <ion-row>
+      <ion-col><img src="../../assets/icon/{{productoConcreto.img}}" alt=""></ion-col>
+      <ion-col>
+        <h1>
+          <p>{{productoConcreto.nombreProducto}}</p>
+        </h1>
+        <p>Precio: {{productoConcreto.precioProducto}}€</p>
+        <p>Descripcion: {{productoConcreto.descripcionProducto}}</p>
+        <p>Marca: {{productoConcreto.marca}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>

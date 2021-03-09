@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
-import {DatosBBDDService} from '../datos-bbdd.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { DatosBBDDService } from '../datos-bbdd.service';
 
 @Component({
   selector: 'app-plantilla-producto-familia',
@@ -22,26 +22,26 @@ export class PlantillaProductoFamiliaPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getproductosListFiltradoPorFamiliasPlantilla() {
     this.productosListFiltradoPorFamiliasPlantilla = [];
-    this.datosBBDD.getProductoFamiliaPlantilla(this.familiaNombre)
+    this.datosBBDD
+      .getProductoFamiliaPlantilla(this.familiaNombre)
       .then((data) => {
         this.productosListFiltradoPorFamiliasPlantilla = data;
       })
-      .catch((err) => {
-      });
-
+      .catch((err) => {});
   }
 
   navProductoDetalle(idProducto: number) {
+    console.log(idProducto);
+
     const extrasNavigation: NavigationExtras = {
       state: {
-        ProductoId: idProducto,
+        productoId: idProducto,
       },
     };
-    this.router.navigate(['producto-detalle'], extrasNavigation);
+    this.router.navigate(['producto-info'], extrasNavigation);
   }
 }

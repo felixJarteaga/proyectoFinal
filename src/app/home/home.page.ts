@@ -21,7 +21,6 @@ export class HomePage {
 
   copia() {
     this.copiaService.copiarBBDD();
-
   }
   abrir() {
     this.datosBBDD.crearBBDD();
@@ -29,5 +28,8 @@ export class HomePage {
 
   navPlantillaPedido() {
     this.router.navigate(['plantilla-pedido']);
+  }
+  navMenuPedido() {
+    this.router.navigate(['menu-pedido']);
   }
 }
