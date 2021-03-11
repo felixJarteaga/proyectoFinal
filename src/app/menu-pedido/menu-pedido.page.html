@@ -7,31 +7,66 @@
     </ion-header>
     <ion-content>
       <ion-list *ngFor="let familia of familiasList">
-        <ion-item button (click)="cambiarContenidoPagina()">
+        <ion-item button (click)="cambiarContenidoPagina(familia.idFamilia)">
           <ion-label>{{familia.nombre}}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
 
-  <div class="ion-page" id="main-content">
+  <div class="ion-page" id="main-content" *ngIf="opcionClicada==false">
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>BEBIDA FINA</ion-title>
+        <ion-title>INSTRUCIONES</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding" *ngIf="opcionClicada==false">
-      <h1>productos por familias elegidas en el menu, no he elegido</h1>
-    </ion-content>
-    <ion-content class="ion-padding" *ngIf="opcionClicada==true">
-      <h1>ya he elegido una familia, vamos que he clicado en alguna parte</h1>
+    <ion-content class="ion-padding">
+      <h1>1.Desliza el menu desde la izquierda o pulsa el icono de la esquina superior izquierda</h1>
+      <h1>2.Escoge una familia para mostrar los produtos correspondientes a esa familia</h1>
     </ion-content>
   </div>
-  <ion-footer>
-    <ion-button (click)="navHome()">
-      <ion-icon name="home-outline"></ion-icon>
-    </ion-button>
-  </ion-footer>
+
+  <div *ngIf="opcionClicada==true">
+    <div class="ion-page" id="main-content" *ngFor="let familiaConcreta of familiaPorIdList">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>{{familiaConcreta.nombre}}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-card *ngFor="let productoPorFamilia of productosListFiltradoPorFamiliasPlantilla">
+          <ion-row>
+            <ion-col><img src="../../assets/icon/{{productoPorFamilia.img}}" alt=""></ion-col>
+            <ion-col>
+              <h1>
+                <p>{{productoPorFamilia.nombreProducto}}</p>
+              </h1>
+              <p>Precio: {{productoPorFamilia.precioProducto}}€</p>
+              <p>Descripcion: {{productoPorFamilia.descripcionProducto}}</p>
+              <p>Marca: {{productoPorFamilia.marca}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <input type="number" class="bg-gray-300 rouded m-2">
+            <ion-button color="dark">Añadir</ion-button>
+            <ion-button color="dark" (click)="borrarProductoDeLaPlantilla(productoPorFamilia.idProducto)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-row>
+        </ion-card>
+      </ion-content>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button color="dark" (click)="navHome()">
+    <ion-icon name="home-outline"></ion-icon>
+  </ion-button>
+</ion-footer>

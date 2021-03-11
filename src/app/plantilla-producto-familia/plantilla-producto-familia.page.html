@@ -9,10 +9,12 @@
 <ion-content>
   <ion-list-header>{{familiaNombre}}</ion-list-header>
   <ion-list *ngFor="let productoFiltrado of productosListFiltradoPorFamiliasPlantilla">
-    <ion-item>
+    <ion-item *ngIf="!productoFiltrado.anadido">
       <ion-label>{{productoFiltrado.nombreProducto}}</ion-label>
-      <ion-checkbox color="primary" slot="start"></ion-checkbox>
-      <ion-button slot="end" (click)="navProductoDetalle(productoFiltrado.idProducto)">Info</ion-button>
+      <ion-button slot="start"
+        (click)="AddProductoALaPlantilla(productoFiltrado.idProducto,productoFiltrado.nombreProducto)">+
+      </ion-button>
+      <ion-button slot="end" (click)="navProductoInfo(productoFiltrado.idProducto)">Info</ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -83,8 +83,19 @@ export class DatosBBDDService {
   }
 
   getFamilias() {
-    const sql = 'SELECT nombreFamilia as nombre FROM familiasProductos';
+    const sql =
+      'SELECT id as idFamilia,nombreFamilia as nombre FROM familiasProductos ';
     // Estas lineas son iguales para cada metodo Query
+    return new Promise<any[]>((resolve, reject) =>
+      this.ejecutarQuery(sql, [])
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => reject(err))
+    );
+  }
+  getFamiliaPorId(id: number) {
+    const sql = `SELECT id as idFamilia,nombreFamilia as nombre FROM familiasProductos WHERE id like"${id}"`;
     return new Promise<any[]>((resolve, reject) =>
       this.ejecutarQuery(sql, [])
         .then((data) => {
@@ -95,7 +106,18 @@ export class DatosBBDDService {
   }
 
   getProductoFamiliaPlantilla(familia: string) {
-    const sql = `SELECT productos.nombreProducto as nombreProducto, productos.idProduct as idProducto FROM productos INNER JOIN familiasProductos ON productos.idFamiliaProducto=familiasProductos.id WHERE familiasProductos.nombreFamilia like"${familia}"`;
+    const sql = `SELECT productos.nombreProducto as nombreProducto, productos.idProduct as idProducto, productos.anadido as anadido FROM productos INNER JOIN familiasProductos ON productos.idFamiliaProducto=familiasProductos.id WHERE familiasProductos.nombreFamilia like"${familia}"`;
+    return new Promise<any[]>((resolve, reject) =>
+      this.ejecutarQuery(sql, [])
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => reject(err))
+    );
+  }
+  getProductosListPorIdFamilia(id: number) {
+    // const sql = `SELECT productos.nombreProducto as nombreProducto,productos.precio as precioProducto,productos.descripcion as descripcionProducto,productos.img as img,Marcas.nombreMarca as marca FROM productos,Marcas where productos.idFamiliaProducto like"${id}" AND productos.idMarca=Marcas.id`;
+    const sql = `SELECT productos.idProduct as idProducto, productos.nombreProducto as nombreProducto,productos.precio as precioProducto,productos.descripcion as descripcionProducto,productos.img as img,Marcas.nombreMarca as marca,productos.anadido as anadido FROM productos,Marcas where productos.idFamiliaProducto like ${id} AND productos.idMarca=Marcas.id AND productos.anadido=true`;
     return new Promise<any[]>((resolve, reject) =>
       this.ejecutarQuery(sql, [])
         .then((data) => {
@@ -114,5 +136,19 @@ export class DatosBBDDService {
         })
         .catch((err) => reject(err))
     );
+  }
+  actualizarProductoConcretoComoAnnadido(idProducto: number) {
+    const sql = `UPDATE productos SET anadido=true WHERE idProduct like ${idProducto}`;
+    // return new Promise<any[]>((resolve, reject) =>
+    this.ejecutarQuery(sql, []);
+    // .then((data) => {
+    //       resolve(data);
+    //     })
+    //     .catch((err) => reject(err))
+    // );
+  }
+  actualizarProductoConcretoComoNoAnnadido(idProducto: number) {
+    const sql = `UPDATE productos SET anadido=false WHERE idProduct like ${idProducto}`;
+    this.ejecutarQuery(sql, []);
   }
 }

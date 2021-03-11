@@ -34,7 +34,7 @@ export class PlantillaProductoFamiliaPage implements OnInit {
       .catch((err) => {});
   }
 
-  navProductoDetalle(idProducto: number) {
+  navProductoInfo(idProducto: number) {
     console.log(idProducto);
 
     const extrasNavigation: NavigationExtras = {
@@ -43,5 +43,10 @@ export class PlantillaProductoFamiliaPage implements OnInit {
       },
     };
     this.router.navigate(['producto-info'], extrasNavigation);
+  }
+  AddProductoALaPlantilla(id: number, nombre: string) {
+    this.datosBBDD.actualizarProductoConcretoComoAnnadido(id);
+    alert('Produto ' + nombre + ' añadido a tu plantilla');
+    this.router.navigate(['plantilla-pedido']);
   }
 }
