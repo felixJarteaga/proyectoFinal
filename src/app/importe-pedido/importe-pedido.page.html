@@ -17,8 +17,8 @@
       <ion-col>{{productoPedido.cantidadProducto}}</ion-col>
       <ion-button color="dark" (click)="borrarProductoDelPedido(productoPedido.idProductPed)">x</ion-button>
     </ion-row>
-    <ion-row *ngFor="let productoPedido of productosDelPedido">
-      <ion-button color="dark" (click)="calcularTotalPedido(productoPedido.cantidadProducto,productoPedido.precio)">
+    <ion-row>
+      <ion-button color="dark" (click)="calcularTotalPedido()">
         Calcular Total €</ion-button>{{totalPedido}}€
     </ion-row>
   </ion-grid>

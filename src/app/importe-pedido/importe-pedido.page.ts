@@ -38,13 +38,11 @@ export class ImportePedidoPage implements OnInit {
     this.datosBBDD.borrarFilaPedido(id);
     this.router.navigate(['home']);
   }
-  calcularTotalPedido(cantidad: number, precio: number): number {
-    if (this.productosDelPedido.length == 0) {
-      this.totalPedido = 0;
-    } else {
-      // this.totalPedido += cantidad * precio;
-      this.totalPedido += 10;
-    }
-    return this.totalPedido;
+  calcularTotalPedido() {
+    this.productosDelPedido.forEach((e) => {
+      console.log(e);
+      this.totalPedido += (e.precio * e.cantidadProducto);
+    });
+
   }
 }
