@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DatosBBDDService } from '../datos-bbdd.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DatosBBDDService} from '../datos-bbdd.service';
 
 @Component({
   selector: 'app-menu-pedido',
@@ -13,11 +13,13 @@ export class MenuPedidoPage implements OnInit {
   cantidadPedida: number;
   productosListFiltradoPorFamiliasPlantilla: any[] = [];
   opcionClicada = false;
+
   constructor(private router: Router, private datosBBDD: DatosBBDDService) {
     this.getFamilias();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   getFamilias() {
     this.familiasList = [];
@@ -32,11 +34,14 @@ export class MenuPedidoPage implements OnInit {
   }
 
   cambiarContenidoPagina(id: number) {
+    id = 1;
     this.opcionClicada = true;
     this.getFamiliaPorId(id);
     this.getProductosFiltradosPorFamilia(id);
   }
+
   getFamiliaPorId(id: number) {
+    id = 1;
     this.familiaPorIdList = [];
     this.datosBBDD
       .getFamiliaPorId(id)
@@ -47,7 +52,9 @@ export class MenuPedidoPage implements OnInit {
         console.log('Error en plantilla-pedidos-page-ts: ' + err);
       });
   }
+
   getProductosFiltradosPorFamilia(id: number) {
+    id = 1;
     this.productosListFiltradoPorFamiliasPlantilla = [];
     this.datosBBDD
       .getProductosListPorIdFamilia(id)
@@ -62,6 +69,7 @@ export class MenuPedidoPage implements OnInit {
   navHome() {
     this.router.navigate(['home']);
   }
+
   borrarProductoDeLaPlantilla(id: number) {
     this.datosBBDD.actualizarProductoConcretoComoNoAnnadido(id);
     alert('Produto eliminado de la plantilla');

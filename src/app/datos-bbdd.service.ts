@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
-import { Platform } from '@ionic/angular';
-import { CopyService } from './share/copy.service';
+import {Injectable} from '@angular/core';
+import {SQLite, SQLiteObject} from '@ionic-native/sqlite/ngx';
+import {Platform} from '@ionic/angular';
+import {CopyService} from './share/copy.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,8 @@ import { CopyService } from './share/copy.service';
 export class DatosBBDDService {
   private db: SQLiteObject;
 
-  constructor(private platform: Platform, private sqlite: SQLite) {}
+  constructor(private platform: Platform, private sqlite: SQLite) {
+  }
 
   ejecutarQuery(sqlSentence: string, searchParam: any[]) {
     console.log(sqlSentence);
@@ -19,12 +20,22 @@ export class DatosBBDDService {
           this.db
             .executeSql(sqlSentence, searchParam)
             .then((data) => {
-              const target = [];
-              for (let i = 0; i < data.rows.length; i++) {
-                const obj = data.rows.item(i);
-                target.push(obj);
+              const responseData = [];
+              if (data.mock) {
+                for (let i = 0; i < data.rows.length; i++) {
+                  console.log(data.rows.length);
+                  const obj = data.rows.items[i];
+                  responseData.push(obj);
+                }
+              } else {
+                for (let i = 0; i < data.rows.length; i++) {
+                  console.log(data.rows.length);
+                  const obj = data.rows.item(i);
+                  responseData.push(obj);
+                }
               }
-              resolve(target);
+
+              resolve(responseData);
             })
             .catch((err) => {
               console.log('fallo al ejecutar sentencia ' + JSON.stringify(err));
@@ -94,6 +105,7 @@ export class DatosBBDDService {
         .catch((err) => reject(err))
     );
   }
+
   getFamiliaPorId(id: number) {
     const sql = `SELECT id as idFamilia,nombreFamilia as nombre FROM familiasProductos WHERE id like"${id}"`;
     return new Promise<any[]>((resolve, reject) =>
@@ -106,7 +118,9 @@ export class DatosBBDDService {
   }
 
   getProductoFamiliaPlantilla(familia: string) {
-    const sql = `SELECT productos.nombreProducto as nombreProducto, productos.idProduct as idProducto, productos.anadido as anadido FROM productos INNER JOIN familiasProductos ON productos.idFamiliaProducto=familiasProductos.id WHERE familiasProductos.nombreFamilia like"${familia}"`;
+    const sql = `SELECT productos.nombreProducto as nombreProducto, productos.idProduct as idProducto,
+     productos.anadido as anadido FROM productos INNER JOIN familiasProductos ON
+     productos.idFamiliaProducto=familiasProductos.id WHERE familiasProductos.nombreFamilia like"${familia}"`;
     return new Promise<any[]>((resolve, reject) =>
       this.ejecutarQuery(sql, [])
         .then((data) => {
@@ -115,6 +129,7 @@ export class DatosBBDDService {
         .catch((err) => reject(err))
     );
   }
+
   getProductosListPorIdFamilia(id: number) {
     // const sql = `SELECT productos.nombreProducto as nombreProducto,productos.precio as precioProducto,productos.descripcion as descripcionProducto,productos.img as img,Marcas.nombreMarca as marca FROM productos,Marcas where productos.idFamiliaProducto like"${id}" AND productos.idMarca=Marcas.id`;
     const sql = `SELECT productos.idProduct as idProducto, productos.nombreProducto as nombreProducto,productos.precio as precioProducto,productos.descripcion as descripcionProducto,productos.img as img,Marcas.nombreMarca as marca,productos.anadido as anadido FROM productos,Marcas where productos.idFamiliaProducto like ${id} AND productos.idMarca=Marcas.id AND productos.anadido=true`;
@@ -137,6 +152,7 @@ export class DatosBBDDService {
         .catch((err) => reject(err))
     );
   }
+
   actualizarProductoConcretoComoAnnadido(idProducto: number) {
     const sql = `UPDATE productos SET anadido=true WHERE idProduct like ${idProducto}`;
     // return new Promise<any[]>((resolve, reject) =>
@@ -147,18 +163,22 @@ export class DatosBBDDService {
     //     .catch((err) => reject(err))
     // );
   }
+
   actualizarProductoConcretoComoNoAnnadido(idProducto: number) {
     const sql = `UPDATE productos SET anadido=false WHERE idProduct like ${idProducto}`;
     this.ejecutarQuery(sql, []);
   }
+
   insertarProdutoPedido(nombre: string, precio: number, cantidad: number) {
     const sql = `INSERT INTO Pedido(nombreProducto,precioUnidad,cantidad) VALUES("${nombre}","${precio}","${cantidad}")`;
     this.ejecutarQuery(sql, []);
   }
+
   eliminarPedido() {
     const sql = `DELETE  FROM Pedido`;
     this.ejecutarQuery(sql, []);
   }
+
   getProductosDelPedido() {
     const sql =
       'SELECT id as idProductPed,nombreProducto as nombre,precioUnidad as precio,cantidad as cantidadProducto FROM Pedido';
@@ -170,6 +190,7 @@ export class DatosBBDDService {
         .catch((err) => reject(err))
     );
   }
+
   borrarFilaPedido(id: number) {
     const sql = `DELETE FROM Pedido WHERE id like "${id}"`;
     this.ejecutarQuery(sql, []);
