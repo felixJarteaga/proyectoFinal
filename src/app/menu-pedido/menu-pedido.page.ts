@@ -10,7 +10,7 @@ import { DatosBBDDService } from '../datos-bbdd.service';
 export class MenuPedidoPage implements OnInit {
   familiasList: any[] = [];
   familiaPorIdList: any[] = [];
-  // familiaNombre: string;
+  cantidadPedida: number;
   productosListFiltradoPorFamiliasPlantilla: any[] = [];
   opcionClicada = false;
   constructor(private router: Router, private datosBBDD: DatosBBDDService) {
@@ -65,6 +65,12 @@ export class MenuPedidoPage implements OnInit {
   borrarProductoDeLaPlantilla(id: number) {
     this.datosBBDD.actualizarProductoConcretoComoNoAnnadido(id);
     alert('Produto eliminado de la plantilla');
+    this.router.navigate(['home']);
+  }
+
+  addProductoAPedido(nombre: string, precio: number, cantidad: number) {
+    cantidad = this.cantidadPedida;
+    this.datosBBDD.insertarProdutoPedido(nombre, precio, cantidad);
     this.router.navigate(['home']);
   }
 }

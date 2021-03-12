@@ -32,4 +32,7 @@ export class HomePage {
   navMenuPedido() {
     this.router.navigate(['menu-pedido']);
   }
+  navPedidoActual() {
+    this.router.navigate(['importe-pedido']);
+  }
 }

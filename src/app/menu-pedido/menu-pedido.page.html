@@ -53,8 +53,11 @@
             </ion-col>
           </ion-row>
           <ion-row>
-            <input type="number" class="bg-gray-300 rouded m-2">
-            <ion-button color="dark">Añadir</ion-button>
+            <!-- <input type="number" class="bg-gray-300 rouded m-2"> -->
+            <ion-input type="number" class="bg-gray-300 rouded m-2" [(ngModel)]="cantidadPedida"></ion-input>
+            <ion-button color="dark"
+              (click)="addProductoAPedido(productoPorFamilia.nombreProducto,productoPorFamilia.precioProducto,cantidadPedida)">
+              Añadir</ion-button>
             <ion-button color="dark" (click)="borrarProductoDeLaPlantilla(productoPorFamilia.idProducto)">
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>

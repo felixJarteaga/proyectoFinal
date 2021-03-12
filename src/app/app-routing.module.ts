@@ -46,7 +46,11 @@ const routes: Routes = [
       import('./menu-pedido/menu-pedido.module').then(
         (m) => m.MenuPedidoPageModule
       ),
+  },  {
+    path: 'importe-pedido',
+    loadChildren: () => import('./importe-pedido/importe-pedido.module').then( m => m.ImportePedidoPageModule)
   },
+
 ];
 
 @NgModule({

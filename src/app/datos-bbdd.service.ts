@@ -151,4 +151,27 @@ export class DatosBBDDService {
     const sql = `UPDATE productos SET anadido=false WHERE idProduct like ${idProducto}`;
     this.ejecutarQuery(sql, []);
   }
+  insertarProdutoPedido(nombre: string, precio: number, cantidad: number) {
+    const sql = `INSERT INTO Pedido(nombreProducto,precioUnidad,cantidad) VALUES("${nombre}","${precio}","${cantidad}")`;
+    this.ejecutarQuery(sql, []);
+  }
+  eliminarPedido() {
+    const sql = `DELETE  FROM Pedido`;
+    this.ejecutarQuery(sql, []);
+  }
+  getProductosDelPedido() {
+    const sql =
+      'SELECT id as idProductPed,nombreProducto as nombre,precioUnidad as precio,cantidad as cantidadProducto FROM Pedido';
+    return new Promise<any[]>((resolve, reject) =>
+      this.ejecutarQuery(sql, [])
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => reject(err))
+    );
+  }
+  borrarFilaPedido(id: number) {
+    const sql = `DELETE FROM Pedido WHERE id like "${id}"`;
+    this.ejecutarQuery(sql, []);
+  }
 }

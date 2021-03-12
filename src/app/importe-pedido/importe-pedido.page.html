@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalle Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>Nombre</ion-col>
+      <ion-col>€/und</ion-col>
+      <ion-col>Cantidad</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let productoPedido of productosDelPedido">
+      <ion-col>{{productoPedido.nombre}}</ion-col>
+      <ion-col>{{productoPedido.precio}}</ion-col>
+      <ion-col>{{productoPedido.cantidadProducto}}</ion-col>
+      <ion-button color="dark" (click)="borrarProductoDelPedido(productoPedido.idProductPed)">x</ion-button>
+    </ion-row>
+    <ion-row *ngFor="let productoPedido of productosDelPedido">
+      <ion-button color="dark" (click)="calcularTotalPedido(productoPedido.cantidadProducto,productoPedido.precio)">
+        Calcular Total €</ion-button>{{totalPedido}}€
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-button color="dark" (click)="navHome()">
+    <ion-icon name="home-outline"></ion-icon>
+  </ion-button>
+  <ion-button color="dark" (click)="eliminarPedido()">
+    <ion-icon name="trash-outline"></ion-icon>Eliminar Pedido
+  </ion-button>
+</ion-footer>
