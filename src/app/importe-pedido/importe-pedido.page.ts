@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DatosBBDDService } from '../datos-bbdd.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DatosBBDDService} from '../datos-bbdd.service';
 
 @Component({
   selector: 'app-importe-pedido',
@@ -9,20 +9,24 @@ import { DatosBBDDService } from '../datos-bbdd.service';
 })
 export class ImportePedidoPage implements OnInit {
   productosDelPedido: any[] = [];
-  totalPedido: number;
+  totalPedido: number = 0;
+
   constructor(private router: Router, private datosBBDD: DatosBBDDService) {
     this.getProductosPedido();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   navHome() {
     this.router.navigate(['home']);
   }
+
   eliminarPedido() {
     this.datosBBDD.eliminarPedido();
     this.router.navigate(['home']);
   }
+
   getProductosPedido() {
     this.productosDelPedido = [];
     this.datosBBDD
@@ -34,17 +38,17 @@ export class ImportePedidoPage implements OnInit {
         console.log('Error en importe-pedido-page-ts: ' + err);
       });
   }
+
   borrarProductoDelPedido(id: number) {
     this.datosBBDD.borrarFilaPedido(id);
     this.router.navigate(['home']);
   }
-  calcularTotalPedido(cantidad: number, precio: number): number {
-    if (this.productosDelPedido.length == 0) {
-      this.totalPedido = 0;
-    } else {
-      // this.totalPedido += cantidad * precio;
-      this.totalPedido += 10;
-    }
-    return this.totalPedido;
+
+  calcularTotalPedido() {
+    this.productosDelPedido.forEach((e) => {
+      console.log(e);
+      this.totalPedido += (e.precio * e.cantidadProducto);
+    });
+
   }
 }
